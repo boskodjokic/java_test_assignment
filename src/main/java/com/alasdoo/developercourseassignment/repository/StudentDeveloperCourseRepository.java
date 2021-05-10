@@ -2,7 +2,6 @@ package com.alasdoo.developercourseassignment.repository;
 
 import com.alasdoo.developercourseassignment.entity.StudentDeveloperCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,5 +14,5 @@ public interface StudentDeveloperCourseRepository extends JpaRepository<StudentD
 
     Optional<List<StudentDeveloperCourse>> findByDeveloperCourseId(Integer developerCourseId);
 
-    Optional<StudentDeveloperCourse> findByDeveloperCourseIdAndStudentId(@Param("courseId") Integer courseId, @Param("studentId") Integer studentId);
+    Optional<StudentDeveloperCourse> findByDeveloperCourseIdAndStudentId(Integer courseId, Integer studentId);
 }
