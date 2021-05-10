@@ -111,4 +111,14 @@ public class StudentDeveloperCourseServiceImpl implements StudentDeveloperCourse
         }
         return studentDeveloperCourseMapper.transformToListOfDTO(studentDeveloperCourse.get());
     }
+
+    @Override
+    public StudentDeveloperCourseDTO findByDeveloperCourseIdAndStudentId(Integer courseId, Integer studentId) {
+        Optional<StudentDeveloperCourse> studentDeveloperCourse = studentDeveloperCourseRepository.findByDeveloperCourseIdAndStudentId(courseId, studentId);
+        if (!studentDeveloperCourse.isPresent()) {
+            throw new IllegalArgumentException
+                    ("Student course combination is not found.");
+        }
+        return studentDeveloperCourseMapper.transformToDTO(studentDeveloperCourse.get());
+    }
 }
