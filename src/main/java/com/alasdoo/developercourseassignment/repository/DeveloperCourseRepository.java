@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/*
+Refactored queries so they are getting back correct lists.
+ */
+
 @Repository
 public interface DeveloperCourseRepository extends JpaRepository<DeveloperCourse, Integer> {
 
@@ -16,13 +20,15 @@ public interface DeveloperCourseRepository extends JpaRepository<DeveloperCourse
 
     @Query(value = "SELECT dc.id, dc.classes_per_week, dc.cost_per_class, dc.developer_course_name " +
         "FROM developer_course dc " +
-        "JOIN student s " +
+        "JOIN  student_developer_course  sdc ON dc.id = sdc.developer_course_id " +
+        "JOIN Student s ON sdc.student_id = s.id " +
         "WHERE s.id = :id", nativeQuery = true)
     Optional<List<DeveloperCourse>> findDevCourseByStudentId(@Param("id") Integer id);
 
     @Query(value = "SELECT dc.id, dc.classes_per_week, dc.cost_per_class, dc.developer_course_name " +
         "FROM developer_course dc " +
-        "JOIN teacher t " +
+        "JOIN  teacher_developer_course  tdc ON dc.id = tdc.developer_course_id " +
+        "JOIN Teacher t ON tdc.teacher_id = t.id " +
         "WHERE t.id = :id", nativeQuery = true)
     Optional<List<DeveloperCourse>> findDevCourseByTeacherId(@Param("id") Integer id);
 
