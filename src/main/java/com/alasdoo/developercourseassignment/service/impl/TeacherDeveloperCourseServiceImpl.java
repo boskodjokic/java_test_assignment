@@ -100,4 +100,14 @@ public class TeacherDeveloperCourseServiceImpl implements TeacherDeveloperCourse
         }
         return teacherDeveloperCourseMapper.transformToDTO(teacherDeveloperCourse.get());
     }
+
+    @Override
+    public TeacherDeveloperCourseDTO findByDeveloperCourseIdAndTeacherId(Integer courseId, Integer teacherId) {
+        Optional<TeacherDeveloperCourse> teacherDeveloperCourse = teacherDeveloperCourseRepository.findByDeveloperCourseIdAndTeacherId(courseId, teacherId);
+        if (!teacherDeveloperCourse.isPresent()) {
+            throw new IllegalArgumentException
+                    ("Teacher course combination is not found.");
+        }
+        return teacherDeveloperCourseMapper.transformToDTO(teacherDeveloperCourse.get());
+    }
 }
