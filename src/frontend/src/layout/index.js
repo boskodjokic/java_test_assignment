@@ -15,6 +15,9 @@ const drawerWidth = 140;
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    "& .MuiTablePagination-actions": {
+      marginRight: 40,
+    }, /*  Refactored this a little bit. Pagination for right was under the + button, and it could only be visible when + was clicked. */
     display: 'flex',
     backgroundColor: theme.palette.background.default,
     minHeight: '100vh',
