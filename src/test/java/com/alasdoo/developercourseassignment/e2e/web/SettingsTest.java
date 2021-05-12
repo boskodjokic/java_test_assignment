@@ -16,8 +16,8 @@ class SettingsTest {
 
     WebDriver driver = BrowserFactory.getBrowser("firefox");
 
+//    Necessary set up before all the tests"
     @BeforeEach
-    @DisplayName("Necessary set up before all the tests")
     void setup() {
         driver.get("http://localhost:3000");
         driver.manage().window().maximize();
@@ -27,28 +27,27 @@ class SettingsTest {
         mainMenu.clickSettings();
     }
 
-
+    //      Checking header title
     @Test
-    @DisplayName("Checking header title")
     void checkHeaderTitle() {
         assertEquals("Settings", header.getSettingsHeaderTitle());
     }
 
+    //    Checking is settings body correctly displayed
     @Test
-    @DisplayName("Checking is settings body correctly displayed")
     void checkSettingsBodyText() {
         assertEquals("Inject demo content in the backend. Run this command only once!", settings.getSettingsBodyText());
     }
 
+    //    Checking is start button enabled and is the START label present
     @Test
-    @DisplayName("Checking is start button enabled and is the START label present")
     void checkStartButton() {
         assertTrue(settings.startButtonEnabled());
         assertEquals("START", settings.getStartButtonText());
     }
 
+    //    Closing the driver after the tests
     @AfterAll
-    @DisplayName("Closing the driver after the tests")
     void close() {
         driver.close();
     }
