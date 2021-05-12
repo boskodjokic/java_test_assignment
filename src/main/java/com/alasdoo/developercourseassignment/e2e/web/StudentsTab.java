@@ -29,7 +29,7 @@ Below are different locators. I used xpath for several of them because there are
     @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[2]/form[1]/div[7]/button[2]")
     private WebElement deleteStudentButton;
 
-    @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[2]/form[1]/div[7]/button[1]")
+    @FindBy(css = "button[data-test-id='courses']")
     private WebElement toggleCourses;
 
     @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[2]/form[1]/div[8]/button[1]")
@@ -223,7 +223,6 @@ Below are different locators. I used xpath for several of them because there are
         String chosenCourse = listOfCourses.get(courseIndex).getText();
         System.out.println(chosenCourse);
         actions.moveToElement(listOfCourses.get(courseIndex)).click().perform();
-//        listOfCourses.get(random.nextInt(10)).click();
         return chosenCourse;
     }
 
