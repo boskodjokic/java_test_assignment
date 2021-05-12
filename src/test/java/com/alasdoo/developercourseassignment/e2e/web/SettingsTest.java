@@ -14,7 +14,9 @@ class SettingsTest {
     private MainMenu mainMenu;
     private Header header;
 
-    WebDriver driver = BrowserFactory.getBrowser("firefox");
+//    Default browesr is Firefox. If nothing is given it the path, tests would run in Firefox.
+//    For any other browser type in the path in terminal "-Dbrowser=(name of the preffered browser)"
+    WebDriver driver = BrowserFactory.getBrowser("browser");
 
 //    Necessary set up before all the tests"
     @BeforeEach

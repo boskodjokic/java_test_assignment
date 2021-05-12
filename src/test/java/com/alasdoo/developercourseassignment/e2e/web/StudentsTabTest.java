@@ -15,10 +15,11 @@ class StudentsTabTest {
     private MainMenu mainMenu;
     private StudentsTab studentsTab;
 
-    WebDriver driver = BrowserFactory.getBrowser("firefox");
+    WebDriver driver = BrowserFactory.getBrowser("browser");
 
     @BeforeEach
     void setup() {
+
         driver.get("http://localhost:3000");
         driver.manage().window().maximize();
         mainMenu = new MainMenu(driver);
