@@ -7,6 +7,10 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
+/*
+This class is used to return different WebDrivers, so the user can choose different WebDriver for testing purposes.
+ */
+
 public class BrowserFactory {
 
     public static WebDriver getBrowser(String browserName) {
@@ -23,16 +27,6 @@ public class BrowserFactory {
                 return getFFInstance();
 
         }
-//        if(browserName.equals("chrome"))
-//            return getChromeInstance();
-//
-//        if(browserName.equals("edge"))
-//            return getEdgeInstance();
-//
-//        if(browserName.equals("ie"))
-//            return getIEInstance();
-//        else
-//            return getFFInstance();
     }
 
     private static FirefoxDriver getFFInstance() {
