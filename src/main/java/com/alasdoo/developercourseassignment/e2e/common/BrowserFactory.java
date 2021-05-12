@@ -13,10 +13,13 @@ This class is used to return different WebDrivers, so the user can choose differ
 
 public class BrowserFactory {
 
-    public static WebDriver getBrowser(String browserName) {
-        browserName = browserName.toLowerCase();
 
-        switch (browserName) {
+    public static WebDriver getBrowser(String browserName) {
+
+        browserName = browserName.toLowerCase();
+        String browser = System.getProperties().get(browserName).toString();
+
+        switch (browser) {
             case "chrome":
                 return getChromeInstance();
             case "edge":
@@ -30,26 +33,26 @@ public class BrowserFactory {
     }
 
     private static FirefoxDriver getFFInstance() {
-         WebDriverManager.firefoxdriver().setup();
-        FirefoxDriver driver =new FirefoxDriver();
+        WebDriverManager.firefoxdriver().setup();
+        FirefoxDriver driver = new FirefoxDriver();
         return driver;
     }
 
     private static ChromeDriver getChromeInstance() {
         WebDriverManager.chromedriver().setup();
-        ChromeDriver driver =new ChromeDriver();
+       ChromeDriver driver = new ChromeDriver();
         return driver;
     }
 
     private static EdgeDriver getEdgeInstance() {
         WebDriverManager.edgedriver().setup();
-        EdgeDriver driver =new EdgeDriver();
+        EdgeDriver driver = new EdgeDriver();
         return driver;
     }
 
     private static InternetExplorerDriver getIEInstance() {
         WebDriverManager.iedriver().setup();
-        InternetExplorerDriver driver =new InternetExplorerDriver();
+        InternetExplorerDriver driver = new InternetExplorerDriver();
         return driver;
     }
 
