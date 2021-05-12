@@ -162,6 +162,9 @@ export default function StudentForm({ studentId, onChange, toggleCourses }) {
             type="email"
             required
           ></TextField>
+          {/* Added password to the form as it was not visible when creating new student (or viewing the existing).
+          Because of that, creation of nw student was not possible. */}
+          <TextField name="password" label="Password" required disabled={!isNew}></TextField>
           <TextField
             name="bankCardNumber"
             label="Bank card number"
