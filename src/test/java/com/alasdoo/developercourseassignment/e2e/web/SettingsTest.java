@@ -1,7 +1,10 @@
 package com.alasdoo.developercourseassignment.e2e.web;
 
 import com.alasdoo.developercourseassignment.e2e.common.BrowserFactory;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.WebDriver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,11 +17,11 @@ class SettingsTest {
     private MainMenu mainMenu;
     private Header header;
 
-//    Default browesr is Firefox. If nothing is given it the path, tests would run in Firefox.
-//    For any other browser type in the path in terminal "-Dbrowser=(name of the preffered browser)"
-    WebDriver driver = BrowserFactory.getBrowser("browser");
+    //    Default browser is Firefox. If nothing is given it the path, tests would run in Firefox.
+//    For any other browser type in the path in terminal "-Dbrowser=(name of the preferred browser)"
+    WebDriver driver = BrowserFactory.getBrowser(System.getProperty("browser"));
 
-//    Necessary set up before all the tests"
+    //    Necessary set up before all the tests"
     @BeforeEach
     void setup() {
         driver.get("http://localhost:3000");

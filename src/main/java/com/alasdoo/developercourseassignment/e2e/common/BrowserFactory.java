@@ -13,47 +13,30 @@ This class is used to return different WebDrivers, so the user can choose differ
 
 public class BrowserFactory {
 
-
     public static WebDriver getBrowser(String browserName) {
 
-        browserName = browserName.toLowerCase();
-        String browser = System.getProperties().get(browserName).toString();
-
-        switch (browser) {
-            case "chrome":
-                return getChromeInstance();
-            case "edge":
-                return getEdgeInstance();
-            case "ie":
-                return getIEInstance();
-            default:
-                return getFFInstance();
-
+        if (browserName == null) {
+            WebDriverManager.firefoxdriver().setup();
+            return new FirefoxDriver();
         }
-    }
+            browserName = browserName.toLowerCase();
 
-    private static FirefoxDriver getFFInstance() {
-        WebDriverManager.firefoxdriver().setup();
-        FirefoxDriver driver = new FirefoxDriver();
-        return driver;
-    }
+            switch (browserName) {
+                case "chrome":
+                    WebDriverManager.chromedriver().setup();
+                    return new ChromeDriver();
+                case "edge":
+                    WebDriverManager.edgedriver().setup();
+                    return new EdgeDriver();
+                case "ie":
+                    WebDriverManager.iedriver().setup();
+                    return new InternetExplorerDriver();
+                default:
+                    WebDriverManager.firefoxdriver().setup();
+                    return new FirefoxDriver();
 
-    private static ChromeDriver getChromeInstance() {
-        WebDriverManager.chromedriver().setup();
-       ChromeDriver driver = new ChromeDriver();
-        return driver;
-    }
+            }
 
-    private static EdgeDriver getEdgeInstance() {
-        WebDriverManager.edgedriver().setup();
-        EdgeDriver driver = new EdgeDriver();
-        return driver;
-    }
-
-    private static InternetExplorerDriver getIEInstance() {
-        WebDriverManager.iedriver().setup();
-        InternetExplorerDriver driver = new InternetExplorerDriver();
-        return driver;
     }
 
 }
