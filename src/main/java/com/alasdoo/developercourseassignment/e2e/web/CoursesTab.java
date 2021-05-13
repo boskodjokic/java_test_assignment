@@ -32,6 +32,9 @@ public class CoursesTab {
     @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[2]/div[1]/button[1]/span[1]/*[1]")
     private WebElement coursesXButton;
 
+    @FindBy(css = "div.makeStyles-root-1 main.makeStyles-content-3 div.makeStyles-mainContent-4 div.MuiDataGrid-root.MuiDataGrid-root div.MuiDataGrid-mainGridContainer:nth-child(2) div.MuiDataGrid-window div.MuiDataGrid-dataContainer.data-container div.MuiDataGrid-viewport div.rendering-zone div.MuiDataGrid-row.Mui-even > div.MuiDataGrid-cell.MuiDataGrid-cellLeft:nth-child(2)")
+    private WebElement nameInTable;
+
     //    Method for entering course name
     public void enterCourseName(String courseName) {
         courseNameField.sendKeys(courseName);
@@ -74,5 +77,26 @@ public class CoursesTab {
     //    Method for deleting classes per week
     public void clearClassesPerWeek() {
         classesPerWeekField.clear();
+    }
+
+    //    Method for asserting is the button displayed
+    public boolean isSaveButtonDisplayed() {
+        coursesSaveButton.isDisplayed();
+        return true;
+    }
+
+    //    Method for getting the text from the table
+    public String getNameFromTable() {
+        return nameInTable.getText();
+    }
+
+    //    Method for clicking newly added course account name in table
+    public void clickNameFromTable() {
+        nameInTable.click();
+    }
+
+    //    Method for deleting course name
+    public void clearName() {
+        courseNameField.clear();
     }
 }
