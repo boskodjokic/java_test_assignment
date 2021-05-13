@@ -11,18 +11,17 @@ class MainMenuTest {
 
     private MainMenu mainMenu;
 
-    WebDriver driver = BrowserFactory.getBrowser("browser");
+    WebDriver driver = BrowserFactory.getBrowser(System.getProperty("browser"));
 
     @BeforeEach
-    @DisplayName("Necessary set up before all the tests")
     void setup() {
         driver.get("http://localhost:3000");
         driver.manage().window().maximize();
         mainMenu = new MainMenu(driver);
     }
 
+//    Checking are all common buttons on main page working
     @Test
-    @DisplayName("Checking are all common buttons on main page working")
     void checkButtonsOnMainPage() throws InterruptedException {
         assertTrue(mainMenu.rightArrowEnabled());
         int clicks = mainMenu.getNumberOfClicks();
@@ -35,7 +34,6 @@ class MainMenuTest {
     }
 
     @AfterAll
-    @DisplayName("Closing the driver after the tests")
     void close() {
         driver.close();
     }
