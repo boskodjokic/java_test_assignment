@@ -1,6 +1,7 @@
 package com.alasdoo.developercourseassignment.e2e.web;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -46,11 +47,11 @@ Below are different locators. I used xpath for several of them because there are
 
     @FindBy(xpath = "//body/div[@id='menu-developerCourseId']/div[3]/ul[1]")
     private WebElement allCourses;
-//
-//    @FindBy(xpath = "//body/div[@id='menu-developerCourseId']/div[3]/ul[1]/li[1]")
-//    private WebElement firstCourse;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/main[1]/div[2]/div[3]/div[1]/form[1]/div[2]/div[1]/input[1]")
+    @FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/main[1]/div[2]/div[3]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]")
+    private WebElement firstCourse;
+
+    @FindBy(name = "classesBought")
     private WebElement classesBoughtField;
 
     @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[3]/div[1]/form[1]/div[3]/button[1]")
@@ -86,22 +87,20 @@ Below are different locators. I used xpath for several of them because there are
     @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[2]")
     private WebElement table;
 
-    @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[4]")
+    @FindBy(className = "MuiDataGrid-viewport")
     private WebElement accountNameInTable;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/main[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]")
+    @FindBy(css = "div.makeStyles-root-1 main.makeStyles-content-3 div.makeStyles-mainContent-4 div.MuiDataGrid-root.MuiDataGrid-root div.MuiDataGrid-mainGridContainer:nth-child(2) div.MuiDataGrid-window div.MuiDataGrid-dataContainer.data-container div.MuiDataGrid-viewport div.rendering-zone div.MuiDataGrid-row.Mui-even:nth-child(1) > div.MuiDataGrid-cell.MuiDataGrid-cellLeft:nth-child(2)")
     private WebElement nameInTable;
 
     @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[3]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]")
     private WebElement courseDescription;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/main[1]/div[2]/div[3]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]")
-    private WebElement courseBought;
-
     @FindBy(xpath = "//body/div[@id='root']/div[1]/main[1]/div[2]/div[3]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]")
-//MuiDataGrid-cell MuiDataGrid-cellLeft
-//body/div[@id='root']/div[1]/main[1]/div[2]/div[3]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]
     private WebElement coursesTable;
+
+    @FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/main[1]/div[2]/div[3]/div[2]/div[1]/div[1]/div[2]/div[3]/div[1]/div[1]")
+    private WebElement emptyCoursesTable;
 
 
     //    Method for entering name
@@ -111,7 +110,13 @@ Below are different locators. I used xpath for several of them because there are
 
     //    Method for clearing name
     public void clearName() {
-        nameField.clear();
+        while (!nameField.getAttribute("value").equals("")) {
+            nameField.sendKeys(Keys.BACK_SPACE);
+        }
+    }
+
+    public void clickOnNameField() {
+        nameField.click();
     }
 
     //    Method for entering surname
@@ -142,6 +147,12 @@ Below are different locators. I used xpath for several of them because there are
     //    Method for clicking save student button
     public void clickSaveStudentButton() {
         saveStudentButton.click();
+    }
+
+//    Checking if the save button is displayed
+    public boolean isSaveButtonDisplayed(){
+        saveStudentButton.isDisplayed();
+        return true;
     }
 
     //    Method for clicking delete student button
@@ -181,7 +192,7 @@ Below are different locators. I used xpath for several of them because there are
 
     //    Method for clicking newly added student in table
     public void clickOnStudentInTable() {
-        accountNameInTable.click();
+        nameInTable.click();
     }
 
     //    Method for getting list of students in the table
@@ -191,7 +202,8 @@ Below are different locators. I used xpath for several of them because there are
 
     //    Method for clicking newly added student account name in table
     public String getAccountNameFromTable() {
-        return accountNameInTable.getText();
+        String[] table = accountNameInTable.getText().split("\\r?\\n");
+        return table[table.length-2];
     }
 
     //    Method for clicking newly added student name in table
@@ -209,27 +221,22 @@ Below are different locators. I used xpath for several of them because there are
         courseDropdown.click();
     }
 
-    //    Method for getting list of courses
-    public void getListOfCoursesDropdown() {
-        List<WebElement> listOfCoursesDropdown = allCourses.findElements(By.className("MuiTouchRipple-root"));
-    }
 
 //    Clicking on a random course from a course list
     public String clickOnRandomCourse() {
-        List<WebElement> listOfCourses = allCourses.findElements(By.className("MuiTouchRipple-root"));
-        Random random = new Random(20);
-        int courseIndex = random.nextInt(20);
+        List<WebElement> listOfCourses = allCourses.findElements(By.tagName("li"));
+        Random random = new Random();
+        int courseIndex = random.nextInt(10);
         Actions actions = new Actions(driver);
-        String chosenCourse = listOfCourses.get(courseIndex).getText();
-        System.out.println(chosenCourse);
+        String course = listOfCourses.get(courseIndex).getText();
+//        Sometimes the test addCourse won't work until this below is executed. No idea how it is handling this, but it went OK 10/10 times when it printed the list in console.
+//        for(int i =0 ; i< listOfCourses.size(); i++){
+//            System.out.println(listOfCourses.get(i).getText());
+//        }
         actions.moveToElement(listOfCourses.get(courseIndex)).click().perform();
-        return chosenCourse;
+        return course;
     }
 
-//    //  Clicking on the first course in the dropdown
-//    public void clickOnFirstCourse() {
-//        firstCourse.click();
-//    }
 
     //    Entering classes bought
     public void enterClassesBought(String classesBought) {
@@ -238,7 +245,9 @@ Below are different locators. I used xpath for several of them because there are
 
     //    Clearing classes bought
     public void clearClassesBought() {
-        classesBoughtField.clear();
+        while (!classesBoughtField.getAttribute("value").equals("")) {
+            classesBoughtField.sendKeys(Keys.BACK_SPACE);
+        }
     }
 
     //    Clicking on delete course button
@@ -246,39 +255,35 @@ Below are different locators. I used xpath for several of them because there are
         deleteClassesButton.click();
     }
 
-//    //    Getting course description
-//    public String getCourseDescription() {
-//        return courseDescription.getText();
-//    }
-
-    //    Method for getting list of courses
-    public void getListOfCoursesView() {
-        List<WebElement> listOfCoursesView = coursesTable.findElements(By.className("MuiDataGrid-viewport"));
-    }
-
+    //Getting last course from view table (we are taking second to last index, because with students, we have also classes in a string)
     public String getLastCourseFromView() {
-        List<WebElement> listOfCoursesView = coursesTable.findElements(By.xpath("//body/div[@id='root']/div[1]/main[1]/div[2]/div[3]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]"));
-        System.out.println(listOfCoursesView.size());
-        int lastIndex = listOfCoursesView.size()-1;
-        Actions actions = new Actions(driver);
-        String chosenCourse = listOfCoursesView.get(lastIndex).getText();
-        actions.moveToElement(listOfCoursesView.get(lastIndex)).click().perform();
-        return chosenCourse;
-    }
-
-    //    Clicking on first student course in courses table
-    public void clickOnFirstStudentsCourse() {
-        courseDescription.click();
+        String chosenCourse = coursesTable.getText();
+        String[] courseSplit = chosenCourse.split("\\r?\\n");
+        return courseSplit[courseSplit.length - 2];
     }
 
     //    Getting classes bought text
     public String getCoursesBought() {
-        return courseBought.getText();
+        String coursesBought = coursesTable.getText();
+        String[] coursesBoughtSplit = coursesBought.split("\\r?\\n");
+
+        return coursesBoughtSplit[coursesBoughtSplit.length - 1];
     }
 
     //    Getting text from courses table
     public String getCoursesTable() {
         return coursesTable.getText();
+    }
+
+//    Getting text from empty courses table
+    public String getEmptyCoursesTableText() {
+        return emptyCoursesTable.getText();
+    }
+
+//    Checking how many courses are in the table. It is divided by 2 as it takes course name and classes bought together from the viewport.
+    public int numberOfCoursesInTable() {
+        String[] check = getCoursesTable().split("\\r?\\n");
+        return check.length/2;
     }
 
 }
