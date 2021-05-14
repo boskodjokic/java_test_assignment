@@ -6,3 +6,8 @@
 2. To start the backend run `mvnw spring-boot:run` command (control + c will kill the application)
 3. Build the frontend: `cd src/frontend`, `yarn`. (install `yarn` and `node` if needed)
 4. To start the frontend go to `src/frontend` and run `yarn start`. It will run on `localhost:3000`.
+
+
+## Additional comments
+
+1. Tests can be run directly from IDE or from the terminal. You can also choose which browser could be used (if nothing is specified, Firefox is default). Specify the browser in command line path (-Dbrowser="browsername")
