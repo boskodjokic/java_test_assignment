@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CoursesTabTest {
@@ -17,11 +18,11 @@ class CoursesTabTest {
     private MainMenu mainMenu;
     private CoursesTab coursesTab;
 
-    WebDriver driver = BrowserFactory.getBrowser(System.getProperty("browser"));
+    WebDriver driver;
 
     @BeforeEach
     void setup() {
-
+        driver = BrowserFactory.getBrowser(System.getProperty("browser"));
         driver.get("http://localhost:3000/course");
         driver.manage().window().maximize();
         mainMenu = new MainMenu(driver);
@@ -88,9 +89,11 @@ class CoursesTabTest {
 
     }
 
-
-    @AfterAll
+    //        Closing the driver after the tests
+    @AfterEach
     void close() {
-        driver.close();
+        if (driver != null) {
+            driver.close();
+        }
     }
 }

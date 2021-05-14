@@ -19,11 +19,11 @@ class StudentsTabTest {
     private MainMenu mainMenu;
     private StudentsTab studentsTab;
 
-    WebDriver driver = BrowserFactory.getBrowser(System.getProperty("browser"));
+    WebDriver driver;
 
     @BeforeEach
     void setup() {
-
+        driver = BrowserFactory.getBrowser(System.getProperty("browser"));
         driver.get("http://localhost:3000/student");
         driver.manage().window().maximize();
         mainMenu = new MainMenu(driver);
@@ -172,8 +172,11 @@ class StudentsTabTest {
         }
     }
 
-    @AfterAll
+    //        Closing the driver after the tests
+    @AfterEach
     void close() {
-        driver.close();
+        if (driver != null) {
+            driver.close();
+        }
     }
 }

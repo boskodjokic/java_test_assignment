@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TeachersTabTest {
@@ -19,11 +20,11 @@ class TeachersTabTest {
     private MainMenu mainMenu;
     private TeachersTab teachersTab;
 
-    WebDriver driver = BrowserFactory.getBrowser(System.getProperty("browser"));
+    WebDriver driver;
 
     @BeforeEach
     void setup() {
-
+        driver = BrowserFactory.getBrowser(System.getProperty("browser"));
         driver.get("http://localhost:3000/teacher");
         driver.manage().window().maximize();
         mainMenu = new MainMenu(driver);
@@ -103,8 +104,8 @@ class TeachersTabTest {
         teachersTab.clickToggleCoursesButton();
         teachersTab.clickOnAddCourseButton();
         teachersTab.clickOnCoursesDropdownList();
-        String course =  teachersTab.clickOnRandomCourse();
-        WebDriverWait wait=new WebDriverWait(driver, 3);
+        String course = teachersTab.clickOnRandomCourse();
+        WebDriverWait wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//body/div[@id='root']/div[1]/main[1]/div[2]/div[3]/div[1]/form[1]/div[2]/button[1]")));
         Thread.sleep(3000);
         teachersTab.clickSaveCourseButton();
@@ -135,16 +136,18 @@ class TeachersTabTest {
         course.click();
         teachersTab.clickOnDeleteCourseButton();
 
-        if(numberOfCourses>1) {
+        if (numberOfCourses > 1) {
             assertNotEquals(courseFromView, teachersTab.getLastCourseFromView());
-        }
-        else {
+        } else {
             assertNotEquals(courseFromView, teachersTab.getEmptyCoursesTableText());
         }
-
     }
-    @AfterAll
+
+    //        Closing the driver after the tests
+    @AfterEach
     void close() {
-        driver.close();
+        if (driver != null) {
+            driver.close();
+        }
     }
 }
